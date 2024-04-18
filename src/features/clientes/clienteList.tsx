@@ -1,14 +1,14 @@
 'use client'
 
 import React from "react";
-import { Cliente } from "../../types/cliente";
 
-import {RootState} from '../../redux/store';
 import { useAppSelector } from "@/hooks/useStore";
+import { RootState } from "@/redux/store";
+import { Cliente } from "@/types/cliente";
 
 
 const ClientList = () => {
-  const clientes = useAppSelector((state: RootState) => state.cliente.clientes);
+  const clientes = useAppSelector((state: RootState) => state?.cliente.clientes);
 
   return (
     <div>

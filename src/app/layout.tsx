@@ -4,6 +4,7 @@ import "./globals.css";
 
 import StyledComponentsRegistry from "@/lib/registry";
 import NavBar from "@/components/NavBar/NavBar";
+import ReduxProvider from "@/redux/redux-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,7 @@ export default function RootLayout({
           <main>
             <NavBar />
             <div className="min-h-screen basis-full overflow-scroll flex flex-start">
-              {children}
+              <ReduxProvider>{children}</ReduxProvider>
             </div>
             {/* <Footer /> */}
           </main>
