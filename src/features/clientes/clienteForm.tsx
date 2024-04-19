@@ -6,8 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 import { setClient } from "@/redux/reducers/clienteSlice";
-import { useAppDispatch } from "@/hooks/useStore";
 import useZipCode from "@/hooks/useZipCode";
+import { useAppDispatch } from "@/hooks/useStore";
+import { formatCnpjMask, formatZipCode } from "@/utils/masks";
 
 
 const schema = Yup.object().shape({
@@ -24,6 +25,8 @@ const schema = Yup.object().shape({
 
 
 const ClienteForm: React.FC = () => {
+  
+  const dispatch = useAppDispatch()
 
   const {
     control,
@@ -34,32 +37,23 @@ const ClienteForm: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
+
   const { searchByZipCode, results } = useZipCode();
 
-  const formatZipCode = (input: string) => {
-    const cleanValue = input.replace(/\D/g, "");
-
-    if (cleanValue.length <= 5) {
-      return cleanValue;
-    } else {
-      const part1 = cleanValue.substring(0, 5);
-      const part2 = cleanValue.substring(5, 8);
-      return `${part1}-${part2}`;
-    }
-  };
-
-  const dispatch = useAppDispatch();
 
   const onSubmit = (data: any) => { 
-    console.log("oieee",  data)
     dispatch(setClient(data));
   };
   
+  const handleCpfMask = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const mask = formatCnpjMask(event.target.value);
+    console.log("cnpj", mask)
+    setValue("cnpj", mask) 
+  };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatZipCode(event.target.value);
     searchByZipCode(formattedValue);
   };
-
 
   if (results) {
     setValue("estado", results.uf);
@@ -85,7 +79,10 @@ const ClienteForm: React.FC = () => {
           name="cnpj"
           control={control}
           defaultValue=""
-          render={({ field }) => <input {...field} />}
+          render={({ field }) => 
+          <input {...field} 
+          onChange={(e) => {handleCpfMask(e)}}
+          />}
         />
       </div>
       <div>
@@ -161,6 +158,10 @@ const ClienteForm: React.FC = () => {
 
 export default ClienteForm;
 function setValue(arg0: string, uf: any) {
+  throw new Error("Function not implemented.");
+}
+
+function initializeProduct(product: any): any {
   throw new Error("Function not implemented.");
 }
 

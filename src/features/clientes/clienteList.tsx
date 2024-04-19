@@ -8,7 +8,7 @@ import { Cliente } from "@/types/cliente";
 
 
 const ClientList = () => {
-  const clientes = useAppSelector((state: RootState) => state?.cliente.clientes);
+  const clientes = useAppSelector((state: RootState) => state.cliente.clientes);
 
   return (
     <div>
