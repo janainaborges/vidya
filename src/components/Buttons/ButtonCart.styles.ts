@@ -71,11 +71,11 @@ export const ListItemText = styled.div<IconWrapperProps>`
   width: ${(props: any) =>
     (props.size === "small" && "23px") ||
     (props.size === "medium" && "25px") ||
-    (props.size === "large" && "27px")};
+    (props.size === "large" && "34px")};
   height: ${(props: any) =>
     (props.size === "small" && "25px") ||
     (props.size === "medium" && "27px") ||
-    (props.size === "large" && "29px")};
+    (props.size === "large" && "30px")};
   border-radius: 50%;
   color: ${(props) => props.color};
   font-size: ${(props: any) =>

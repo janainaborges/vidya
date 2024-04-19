@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -9,7 +9,9 @@ import { setClient } from "@/redux/reducers/clienteSlice";
 import useZipCode from "@/hooks/useZipCode";
 import { useAppDispatch } from "@/hooks/useStore";
 import { formatCnpjMask, formatZipCode } from "@/utils/masks";
-
+import InputFieldComponent from "@/components/Inputs/inputField";
+import { Column, Footer, Form, Label, Row } from "./styles";
+import ButtonCart from "@/components/Buttons/ButtonCart";
 
 const schema = Yup.object().shape({
   nome: Yup.string().required("Nome é obrigatório"),
@@ -23,10 +25,8 @@ const schema = Yup.object().shape({
   numero: Yup.string().required("Número é obrigatório"),
 });
 
-
 const ClienteForm: React.FC = () => {
-  
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -37,18 +37,16 @@ const ClienteForm: React.FC = () => {
     resolver: yupResolver(schema),
   });
 
-
   const { searchByZipCode, results } = useZipCode();
 
-
-  const onSubmit = (data: any) => { 
+  const onSubmit = (data: any) => {
     dispatch(setClient(data));
   };
-  
+
   const handleCpfMask = (event: React.ChangeEvent<HTMLInputElement>) => {
     const mask = formatCnpjMask(event.target.value);
-    console.log("cnpj", mask)
-    setValue("cnpj", mask) 
+    console.log("cnpj", mask);
+    setValue("cnpj", mask);
   };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatZipCode(event.target.value);
@@ -56,112 +54,125 @@ const ClienteForm: React.FC = () => {
   };
 
   if (results) {
-    setValue("estado", results.uf);
-    setValue("cidade", results.localidade);
-    setValue("bairro", results.bairro);
-    setValue("endereco", results.logradouro);
+    results.map((e: any) => {
+      setValue("estado", e.uf);
+      setValue("cidade", e.localidade);
+      setValue("bairro", e.bairro);
+      setValue("endereco", e.logradouro);
+    });
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>Nome:</label>
-        <Controller
-          name="nome"
-          control={control}
-          defaultValue=""
-          render={({ field }) => <input {...field} />}
-        />
-      </div>
-      <div>
-        <label>CNPJ:</label>
-        <Controller
-          name="cnpj"
-          control={control}
-          defaultValue=""
-          render={({ field }) => 
-          <input {...field} 
-          onChange={(e) => {handleCpfMask(e)}}
-          />}
-        />
-      </div>
-      <div>
-        <label>Telefone:</label>
-        <Controller
-          name="telefone"
-          control={control}
-          defaultValue=""
-          render={({ field }) => <input {...field} />}
-        />
-      </div>
-      <div>
-        <label>CEP:</label>
-        <Controller
-          name="cep"
-          control={control}
-          defaultValue=""
-          render={({ field }) => <input 
-          {...field} 
-          onBlur={(e) => handleInputChange(e)}
-          />}
-        />
-      </div>
-      <div>
-        <label>Estado:</label>
-        <Controller
-          name="estado"
-          control={control}
-          defaultValue=""
-          render={({ field }) => <input {...field} />}
-        />
-      </div>
-      <div>
-        <label>Cidade:</label>
-        <Controller
-          name="cidade"
-          control={control}
-          defaultValue=""
-          render={({ field }) => <input {...field} />}
-        />
-      </div>
-      <div>
-        <label>Bairro:</label>
-        <Controller
-          name="bairro"
-          control={control}
-          defaultValue=""
-          render={({ field }) => <input {...field} />}
-        />
-      </div>
-      <div>
-        <label>Endereço:</label>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <Row>
+        <Column>
+          <Label>Nome</Label>
+          <Controller
+            name="nome"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <InputFieldComponent {...field} />}
+          />
+        </Column>
+        <Column>
+          <Label>CNPJ</Label>
+          <Controller
+            name="cnpj"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <InputFieldComponent
+                {...field}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleCpfMask(e);
+                }}
+              />
+            )}
+          />
+        </Column>
+        <Column>
+          <Label>Telefone</Label>
+          <Controller
+            name="telefone"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <InputFieldComponent {...field} />}
+          />
+        </Column>
+      </Row>
+
+      <Row>
+        <Column>
+          <Label>CEP</Label>
+          <Controller
+            name="cep"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <InputFieldComponent
+                {...field}
+                onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  handleInputChange(e)
+                }
+              />
+            )}
+          />
+        </Column>
+        <Column>
+          <Label>Estado</Label>
+          <Controller
+            name="estado"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <InputFieldComponent {...field} />}
+          />
+        </Column>
+        <Column>
+          <Label>Cidade</Label>
+          <Controller
+            name="cidade"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <InputFieldComponent {...field} />}
+          />
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <Label>Bairro</Label>
+          <Controller
+            name="bairro"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <InputFieldComponent {...field} />}
+          />
+        </Column>
+        <Column>
+
+        <Label>Endereço</Label>
         <Controller
           name="endereco"
           control={control}
           defaultValue=""
-          render={({ field }) => <input {...field} />}
+          render={({ field }) => <InputFieldComponent {...field} />}
         />
-      </div>
-      <div>
-        <label>Número:</label>
-        <Controller
-          name="numero"
-          control={control}
-          defaultValue=""
-          render={({ field }) => <input {...field} />}
-        />
-      </div>
-      <button type="submit">Adicionar Cliente</button>
-    </form>
+        </Column>
+
+        <Column>
+          <Label>Número</Label>
+          <Controller
+            name="numero"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <InputFieldComponent {...field} />}
+          />
+        </Column>
+      </Row>
+      <Footer>
+      <ButtonCart type="submit" size="large" text={"Salvar"} filter={false} />
+      </Footer>
+    </Form>
   );
 };
 
 export default ClienteForm;
-function setValue(arg0: string, uf: any) {
-  throw new Error("Function not implemented.");
-}
-
-function initializeProduct(product: any): any {
-  throw new Error("Function not implemented.");
-}
-

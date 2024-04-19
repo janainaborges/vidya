@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import {
   Container,
@@ -8,24 +8,31 @@ import {
   CardText,
   Box,
 } from "./CardBody.styled";
+import { Cliente } from "@/types/cliente";
+import { useDispatch } from "react-redux";
+import { setSelectedClientId } from "@/redux/reducers/selectedClientIdSlice";
 
 interface CardData {
-  data: {
-    string: string;
-    name: string;
-    cnpj: string;
-  }[];
+  data: Cliente[];
+  onCardClick: ()=> void
 }
 
-const CardBody = ({ data }: CardData) => {
+const CardBody = ({ data, onCardClick }: CardData) => {
+  const dispatch = useDispatch();
+
+  const handleCardClick = (clientId: string) => {
+    onCardClick()
+    dispatch(setSelectedClientId(clientId));
+  };
+
   return (
     <Box>
-      {data.map((e, index) => (
-        <Container key={index}>
-          <CardText>{e.string}</CardText>
+      {data.map((client: Cliente) => (
+        <Container key={client.id} onClick={() => handleCardClick(client.id)}>
+          <CardText>VY</CardText>
           <BoxCenter>
-            <Title>{e.name}</Title>
-            <Subtitle>{e.cnpj}</Subtitle>
+            <Title>{client.nome}</Title>
+            <Subtitle>{client.cnpj}</Subtitle>
           </BoxCenter>
         </Container>
       ))}

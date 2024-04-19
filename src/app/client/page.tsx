@@ -2,6 +2,7 @@
 import ButtonCart from "@/components/Buttons/ButtonCart";
 import CardBody from "@/components/Cards/CardBody";
 import ModalInfo from "@/components/Modal/ModalInfo";
+import ClienteForm from "@/features/clientes/clienteForm";
 
 import ClientList from "@/features/clientes/clienteList";
 import { useAppSelector } from "@/hooks/useStore";
@@ -23,12 +24,14 @@ const data = [
 export default function Client() {
   const clientes = useAppSelector((state: RootState) => state.cliente.clientes);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenForm, setIsOpenForm] = useState(false);
+  const [isOpenList, setIsOpenList] = useState(false);
+
   return (
     <>
       <div>
         <ButtonCart
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpenForm(!isOpenForm)}
           type="button"
           text={"Modal"}
           filter={false}
@@ -42,16 +45,24 @@ export default function Client() {
           /> */}
 
         {/* <ClienteForm /> */}
-        <CardBody data={data || clientes} />
-        <ClientList />
+        <CardBody data={clientes} onCardClick={() => setIsOpenList(!isOpenList)} />
+        {/* <ClientList /> */}
       </div>
 
       <div>
         <ModalInfo
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
+          isOpen={isOpenForm}
+          onClick={() => setIsOpenForm(false)}
+
           // eslint-disable-next-line react/no-children-prop
-          children={"oie"}
+          children={<ClienteForm />}
+        />
+        <ModalInfo
+          isOpen={isOpenList}
+          onClick={() => setIsOpenList(false)}
+
+          // eslint-disable-next-line react/no-children-prop
+          children={<ClientList />}
         />
       </div>
     </>

@@ -1,6 +1,9 @@
+"use client";
+import { useClientSelect } from "@/hooks/useClientSelect";
 import colors from "@/utils/color";
 import React from "react";
 import { IoMdClose } from "react-icons/io";
+
 import styled from "styled-components";
 
 const ModalBackdrop = styled.div`
@@ -36,10 +39,11 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 const Modal = styled.button`
-  width: 1068px;
-  height: 401px;
+  width: 1120px;
+  height: 501px;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 export const Title = styled.h1`
   font-size: 18px;
@@ -47,21 +51,27 @@ export const Title = styled.h1`
   color: ${colors.dark};
 `;
 
-const ModalInfo = ({ isOpen, onClose, children }: any) => {
+
+const ModalInfo = ({ isOpen, onClick, children }: any) => {
+  const client = useClientSelect();
+
+  if (!client) {
+    return <div>Client não encontrado</div>;
+  }
   if (!isOpen) return null;
 
+  
   return (
-    <ModalBackdrop onClick={onClose}>
+    <ModalBackdrop onClick={onClick}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         <Modal>
           <Header>
-            <Title>cadastro cliente</Title>
+            <Title>{client ? client.nome : "Cadastrar Cliente"}</Title>
 
-            <CloseButton onClick={onClose}>
-              <IoMdClose fontSize={"24px"}/>
+            <CloseButton onClick={onClick}>
+              <IoMdClose fontSize={"24px"} />
             </CloseButton>
           </Header>
-          
           {children}
         </Modal>
       </ModalContainer>

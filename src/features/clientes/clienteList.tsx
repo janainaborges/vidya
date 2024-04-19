@@ -1,36 +1,54 @@
-'use client'
-
 import React from "react";
 
-import { useAppSelector } from "@/hooks/useStore";
-import { RootState } from "@/redux/store";
-import { Cliente } from "@/types/cliente";
+import { Column, Form, Label, Row } from "./styles";
+import { useClientSelect } from "@/hooks/useClientSelect";
 
+const ClientList: React.FC = () => {
+  const client = useClientSelect();
 
-const ClientList = () => {
-  const clientes = useAppSelector((state: RootState) => state.cliente.clientes);
+  if (!client) {
+    return <div>Client não encontrado</div>;
+  }
 
   return (
-    <div>
-      <h2>Lista de Clientes</h2>
-      <ul>
-  {clientes.map((cliente: Cliente) => (
-    <li key={cliente.id}>
-      <p><strong>Nome:</strong> {cliente.nome}</p>
-      <p><strong>CNPJ:</strong> {cliente.cnpj}</p>
-      <p><strong>Telefone:</strong> {cliente.telefone}</p>
-      <p><strong>CEP:</strong> {cliente.cep}</p>
-      <p><strong>Estado:</strong> {cliente.estado}</p>
-      <p><strong>Cidade:</strong> {cliente.cidade}</p>
-      <p><strong>Bairro:</strong> {cliente.bairro}</p>
-      <p><strong>Endereço:</strong> {cliente.endereco}</p>
-      <p><strong>Número:</strong> {cliente.numero}</p>
-    </li>
-  ))}
-</ul>
+    <Form>
+      <Row>
+        <Column>
+          <Label>CNPJ:</Label> {client.cnpj}
+        </Column>
+        <Column>
+          <Label>Telefone:</Label> {client.telefone}
+        </Column>
+        <Column>
+          <Label>CEP:</Label> {client.cep}
+        </Column>
+      </Row>
 
-    </div>
+      <Row>
+        <Column>
+          <Label>Estado:</Label> {client.estado}
+        </Column>
+        <Column>
+          <Label>Cidade:</Label> {client.cidade}
+        </Column>
+        <Column>
+          <Label>Bairro:</Label> {client.bairro}
+        </Column>
+      </Row>
+      
+      <Row>
+        <Column>
+          <Label>Endereço:</Label> {client.endereco}
+        </Column>
+        <Column>
+          <Label>Número:</Label> {client.numero}
+        </Column>
+      </Row>
+    </Form>
   );
 };
 
 export default ClientList;
+function clientSelected() {
+  throw new Error("Function not implemented.");
+}

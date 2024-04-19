@@ -1,4 +1,3 @@
-"use client"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Cliente } from "../../types/cliente";
 import { getState, saveState } from "@/services/localStorageService";
@@ -16,7 +15,11 @@ const clienteSlice = createSlice({
   initialState,
   reducers: {
     setClient(state, action: PayloadAction<Cliente>) {
-      state.clientes.push(action.payload);
+      const newCliente: Cliente = {
+        ...action.payload,
+        id: generateUniqueId()
+      };
+      state.clientes.push(newCliente);
       saveState(state); 
     },
     getClient(state) {
@@ -27,6 +30,10 @@ const clienteSlice = createSlice({
     },
   },
 });
+
+function generateUniqueId(): string {
+  return Math.random().toString(36).substr(2, 9); 
+}
 
 export default clienteSlice.reducer;
 
