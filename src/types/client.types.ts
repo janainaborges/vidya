@@ -1,6 +1,6 @@
-export interface Cliente {
+export interface IClient {
     id: string;
-    nome: string;
+    user: string;
     cnpj: string;
     telefone: string;
     cep: string;
@@ -10,4 +10,3 @@ export interface Cliente {
     endereco: string;
     numero: number;
   }
-  

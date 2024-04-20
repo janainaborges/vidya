@@ -51,22 +51,17 @@ export const Title = styled.h1`
   color: ${colors.dark};
 `;
 
-
 const ModalInfo = ({ isOpen, onClick, children }: any) => {
   const client = useClientSelect();
 
-  if (!client) {
-    return <div>Client não encontrado</div>;
-  }
   if (!isOpen) return null;
 
-  
   return (
     <ModalBackdrop onClick={onClick}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         <Modal>
           <Header>
-            <Title>{client ? client.nome : "Cadastrar Cliente"}</Title>
+            <Title>{!client ? "Cadastrar Cliente" : client.user}</Title>
 
             <CloseButton onClick={onClick}>
               <IoMdClose fontSize={"24px"} />

@@ -23,10 +23,10 @@ export const ButtonCustoms = styled.button<ButtonCustomsProps>`
   display: flex;
   flex-direction: row;
   padding: 8px;
-  gap: 7px;
+  gap: 2px;
   color: #ccc;
-  justify-content: space-around;
-  place-items: center;
+  justify-content: center;
+  align-items: center;
   font-size: ${(props: any) =>
     (props.size === "small" && "10px") ||
     (props.size === "medium" && "12px") ||
@@ -48,40 +48,42 @@ interface IconWrapperProps {
   color: string;
   size: string;
   backgroundColor?: string;
-  filter?: boolean; 
+  filter?: boolean;
 }
 
 export const IconWrapper = styled.div<IconWrapperProps>`
   display: flex;
   place-content: center;
-
   color: ${(props) => props.color};
   font-size: ${(props: any) =>
     (props.size === "small" && "16px") ||
     (props.size === "medium" && "22px") ||
-    (props.size === "large" && "26px") ||
+    (props.size === "large" && "24px") ||
     props.size};
 `;
 
 export const ListItemText = styled.div<IconWrapperProps>`
   display: flex;
-  filter:  ${(props: any) => props.filter && "brightness(1.6)"};
+  flex: 1;
+  text-align: center;
+  font-weight: 300;
+  filter: ${(props: any) => props.filter && "brightness(1.6)"};
   place-content: center;
   place-items: center;
+  font-weight: 500;
   width: ${(props: any) =>
     (props.size === "small" && "23px") ||
     (props.size === "medium" && "25px") ||
-    (props.size === "large" && "34px")};
+    (props.size === "large" && "2rem")};
   height: ${(props: any) =>
     (props.size === "small" && "25px") ||
     (props.size === "medium" && "27px") ||
     (props.size === "large" && "30px")};
-  border-radius: 50%;
   color: ${(props) => props.color};
   font-size: ${(props: any) =>
     (props.size === "small" && "10px") ||
-    (props.size === "medium" && "14px") ||
-    (props.size === "large" && "16px")};
+    (props.size === "medium" && "12px") ||
+    (props.size === "large" && "14px")};
 
   @media (max-width: 768px) {
     width: ${(props: any) =>

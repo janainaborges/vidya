@@ -1,13 +1,18 @@
 "use client";
 import ButtonCart from "@/components/Buttons/ButtonCart";
 import CardBody from "@/components/Cards/CardBody";
+import InputSearch from "@/components/Inputs/InputSearch";
 import ModalInfo from "@/components/Modal/ModalInfo";
 import ClienteForm from "@/features/clientes/clienteForm";
-
 import ClientList from "@/features/clientes/clienteList";
+
 import { useAppSelector } from "@/hooks/useStore";
 import { RootState } from "@/redux/store";
-import { useState } from "react";
+import { ChangeEvent, Fragment, useState } from "react";
+import { CiSearch } from "react-icons/ci";
+import { SlLocationPin } from "react-icons/sl";
+import { Container, Header } from "./styles";
+import { GoPlus } from "react-icons/go";
 
 const data = [
   { string: "JS", name: "vydia", cnpj: "0000.0.00" },
@@ -22,49 +27,63 @@ const data = [
   { string: "JS", name: "vydia", cnpj: "0000.0.00" },
 ];
 export default function Client() {
-  const clientes = useAppSelector((state: RootState) => state.cliente.clientes);
+  const client = useAppSelector((state: RootState) => state.client.clients);
 
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [isOpenList, setIsOpenList] = useState(false);
 
-  return (
-    <>
-      <div>
-        <ButtonCart
-          onClick={() => setIsOpenForm(!isOpenForm)}
-          type="button"
-          text={"Modal"}
-          filter={false}
-        />
-        {/* <InputSearch
-            startIcon={<SlLocationPin style={{ color: "blue" }} />}
-            endIcon={<CiSearch onClick={() => setSearchTerm("")} />}
-            inputValue={inputValue}
-            onChange={() => handleSearchChange}
-            placeholder="Busque por atração"
-          /> */}
+  console.log(isOpenForm)
 
-        {/* <ClienteForm /> */}
-        <CardBody data={clientes} onCardClick={() => setIsOpenList(!isOpenList)} />
-        {/* <ClientList /> */}
-      </div>
+  const [search, setSearch] = useState("");
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const filteredClients = client.filter((client) =>
+    client.user.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <Fragment>
+      <Container>
+        <Header>
+          <InputSearch
+            endIcon={<CiSearch />}
+            inputValue={search}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleSearchChange(e)}
+            placeholder="Pesquisar"
+            size={"large"}
+          />
+          <ButtonCart
+            onClick={() => setIsOpenForm(!isOpenForm)}
+            icon={GoPlus}
+            type="button"
+            text={"Novo Pedido"}
+            filter={false}
+            size={"large"}
+          />
+        </Header>
+        <CardBody
+          data={filteredClients}
+          onCardClick={() => setIsOpenList(!isOpenList)}
+        />
+      </Container>
 
       <div>
         <ModalInfo
           isOpen={isOpenForm}
           onClick={() => setIsOpenForm(false)}
-
           // eslint-disable-next-line react/no-children-prop
           children={<ClienteForm />}
         />
         <ModalInfo
           isOpen={isOpenList}
           onClick={() => setIsOpenList(false)}
-
           // eslint-disable-next-line react/no-children-prop
           children={<ClientList />}
         />
       </div>
-    </>
+    </Fragment>
   );
 }

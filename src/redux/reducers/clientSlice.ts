@@ -1,31 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Cliente } from "../../types/cliente";
+import { IClient } from "../../types/client.types";
 import { getState, saveState } from "@/services/localStorageService";
 
 interface ClienteState {
-  clientes: Cliente[];
+  clients: IClient[];
 }
 
 const initialState: ClienteState = {
-  clientes: [],
+  clients: [],
 };
 
 const clienteSlice = createSlice({
   name: "client",
   initialState,
   reducers: {
-    setClient(state, action: PayloadAction<Cliente>) {
-      const newCliente: Cliente = {
+    setClient(state, action: PayloadAction<IClient>) {
+      const newCliente: IClient = {
         ...action.payload,
         id: generateUniqueId()
       };
-      state.clientes.push(newCliente);
+      state.clients.push(newCliente);
       saveState(state); 
     },
     getClient(state) {
       const storedState = getState();
       if (storedState) {
-        state.clientes = storedState.clientes;
+        state.clients = storedState.clientes;
       }
     },
   },

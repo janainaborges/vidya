@@ -7,6 +7,7 @@ export const Nav = styled.nav`
   padding: 10px 50px;
   align-items: center;
   height: 4rem;
+  background-color: white;
   border-bottom: 1px solid ${colors.gray};
 `;
 export const Center = styled.div`

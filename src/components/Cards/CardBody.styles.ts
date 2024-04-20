@@ -1,23 +1,30 @@
 import colors from "@/utils/color";
 import styled from "styled-components";
 
-export const Box = styled.div`
+export const Main = styled.div`
+  display: flex;
   justify-content: center;
+`;
+export const Box = styled.div`
   margin-top: 10px;
-  gap: 1.5rem;
   display: flex;
   flex-wrap: wrap;
-  
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 17px;
+  grid-row-gap: 12px;
 `;
+
 export const Container = styled.div`
+  background-color: white;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  border: 1px solid;
+  border-radius: 12px;
   width: 317px;
-  padding: 8px;
+  padding: 16px 28px;
   gap: 10px;
 `;
 export const CardText = styled.div`

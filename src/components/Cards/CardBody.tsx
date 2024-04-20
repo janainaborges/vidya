@@ -7,36 +7,39 @@ import {
   Subtitle,
   CardText,
   Box,
-} from "./CardBody.styled";
-import { Cliente } from "@/types/cliente";
+  Main,
+} from "./CardBody.styles";
+import { IClient } from "@/types/client.types";
 import { useDispatch } from "react-redux";
 import { setSelectedClientId } from "@/redux/reducers/selectedClientIdSlice";
 
 interface CardData {
-  data: Cliente[];
-  onCardClick: ()=> void
+  data: IClient[];
+  onCardClick: () => void;
 }
 
 const CardBody = ({ data, onCardClick }: CardData) => {
   const dispatch = useDispatch();
 
   const handleCardClick = (clientId: string) => {
-    onCardClick()
+    onCardClick();
     dispatch(setSelectedClientId(clientId));
   };
 
   return (
-    <Box>
-      {data.map((client: Cliente) => (
-        <Container key={client.id} onClick={() => handleCardClick(client.id)}>
-          <CardText>VY</CardText>
-          <BoxCenter>
-            <Title>{client.nome}</Title>
-            <Subtitle>{client.cnpj}</Subtitle>
-          </BoxCenter>
-        </Container>
-      ))}
-    </Box>
+    <Main>
+      <Box>
+        {data.map((client: IClient) => (
+          <Container key={client.id} onClick={() => handleCardClick(client.id)}>
+            <CardText>VY</CardText>
+            <BoxCenter>
+              <Title>{client.account}</Title>
+              <Subtitle>{client.cnpj}</Subtitle>
+            </BoxCenter>
+          </Container>
+        ))}
+      </Box>
+    </Main>
   );
 };
 

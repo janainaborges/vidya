@@ -1,11 +1,11 @@
 import { RootState } from "@/redux/store";
-import { Cliente } from "@/types/cliente";
+import { IClient } from "@/types/client.types";
 import { useSelector } from "react-redux";
 import { useAppSelector } from "./useStore";
 import { getSelectedClientId } from "@/redux/reducers/selectedClientIdSlice";
 
 export const useClientSelect = () => {
-  const clientes = useAppSelector((state: RootState) => state.cliente.clientes);
+  const clients = useAppSelector((state: RootState) => state.client.clients);
   const selectedClientId = useSelector((state: RootState) =>
     getSelectedClientId(state.selectedClientId)
   );
@@ -14,7 +14,7 @@ export const useClientSelect = () => {
     return null; 
   }
   
-  const clientSelected = clientes.find((client: Cliente) => client.id === selectedClientId);
+  const clientSelected = clients.find((client: IClient) => client.id === selectedClientId);
 
   return clientSelected;
 };

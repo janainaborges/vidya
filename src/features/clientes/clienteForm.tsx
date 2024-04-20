@@ -5,12 +5,12 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-import { setClient } from "@/redux/reducers/clienteSlice";
+import { setClient } from "@/redux/reducers/clientSlice";
 import useZipCode from "@/hooks/useZipCode";
 import { useAppDispatch } from "@/hooks/useStore";
 import { formatCnpjMask, formatZipCode } from "@/utils/masks";
 import InputFieldComponent from "@/components/Inputs/inputField";
-import { Column, Footer, Form, Label, Row } from "./styles";
+import { Column, Footer, Form, Label, Row } from "./client.styles";
 import ButtonCart from "@/components/Buttons/ButtonCart";
 
 const schema = Yup.object().shape({

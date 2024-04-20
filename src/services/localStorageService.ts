@@ -1,4 +1,4 @@
-import { getClient } from "@/redux/reducers/clienteSlice";
+import { getClient } from "@/redux/reducers/clientSlice";
 import { AppThunk } from "@/redux/store";
 
 const localStorageKey = "vidya";

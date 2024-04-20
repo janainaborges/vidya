@@ -1,56 +1,17 @@
-import colors from "@/utils/color";
+import { IInputSearch } from "@/types/input.types";
 import React from "react";
-import styled from "styled-components";
-const SearchContainer = styled.div`
-  display: flex;
-  align-items: center;
-  background: white;
-  border-radius: 4px;
-  padding: 2px;
-  border: 1px solid ${colors.gray};
-`;
+import { Icon, IconEnd, Input, SearchContainer } from "./input.styles";
 
-const Input = styled.input`
-  flex-grow: 1;
-  border: none;
-  background: transparent;
-  border-right: 1px solid ${colors.gray};
-  padding: 8px;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Icon = styled.span`
-  cursor: pointer;
-  font-size: 20px;
-  display: flex;
-  place-items: center;
-`;
-
-const IconEnd = styled.div`
-  width: 40px;
-  height: 100%;
-  display: flex;
-  place-content: center;
-`;
-
-interface InputSearchI {
-  startIcon?: any;
-  endIcon?: any;
-  inputValue: any;
-  onChange: () => void;
-  placeholder?: string;
-}
 const InputSearch = ({
   startIcon,
   endIcon,
   inputValue,
   onChange,
   placeholder,
-}: InputSearchI) => {
+  size
+}: IInputSearch) => {
   return (
-    <SearchContainer>
+    <SearchContainer size={size}>
       {startIcon && (
         <IconEnd>
           <Icon>{startIcon}</Icon>

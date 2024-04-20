@@ -1,10 +1,10 @@
 "use client"
 import { combineReducers } from "@reduxjs/toolkit";
-import clienteReducer from "./clienteSlice";
+import clienteReducer from "./clientSlice";
 import selectedClientIdReducer from "./selectedClientIdSlice";
 
 const rootReducer = combineReducers({
-    cliente: clienteReducer, 
+    client: clienteReducer, 
     selectedClientId: selectedClientIdReducer
 });
 

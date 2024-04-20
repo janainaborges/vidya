@@ -8,13 +8,9 @@ import { MdOutlinePeopleAlt } from "react-icons/md";
 import { usePathname, useRouter } from "next/navigation";
 
 const NavBar = () => {
+  const pathname = usePathname();
+  const router = useRouter();
 
-    const pathname = usePathname()
-    const router = useRouter();
-
-    const handleButtonClick = (route: string, color: string) => {
-      router.push(route); 
-    };
   return (
     <Nav>
       <Center>
@@ -24,14 +20,29 @@ const NavBar = () => {
             icon={MdOutlinePeopleAlt}
             size={"28px"}
             filter={false}
-          
-            backgroundColor={pathname === "/client" ? "pink" :  "none"}
-            color={ "#ccc"}
-            onClick={() => handleButtonClick("/client", "pink")}
+            backgroundColor={
+              pathname === "/client" ? `${colors.blueLight}` : "none"
+            }
+            color={pathname === "/client" ? `${colors.primary}` : "none"}
+            onClick={() => router.push("/client")}
+            border="12px"
+
           />
         </div>
         <div>oie</div>
-        <div>oie</div>
+        <div>
+          <ButtonCart
+            text={"Produto"}
+            icon={MdOutlinePeopleAlt}
+            size={"28px"}
+            filter={false}
+            backgroundColor={
+              pathname === "/product" ? `${colors.blueLight}` : "none"
+            }
+            color={pathname === "/product" ? `${colors.primary}` : "none"}
+            onClick={() => router.push("/client")}
+          />
+        </div>
       </Center>
     </Nav>
   );

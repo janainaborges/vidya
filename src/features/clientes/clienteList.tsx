@@ -1,13 +1,13 @@
 import React from "react";
 
-import { Column, Form, Label, Row } from "./styles";
+import { Column, Form, Label, Row } from "./client.styles";
 import { useClientSelect } from "@/hooks/useClientSelect";
 
 const ClientList: React.FC = () => {
   const client = useClientSelect();
 
   if (!client) {
-    return <div>Client não encontrado</div>;
+    return
   }
 
   return (
