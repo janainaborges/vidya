@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Column, Form, Label, Row } from "./client.styles";
+import { Column, Form, Label, Row } from "../styles";
 import { useClientSelect } from "@/hooks/useClientSelect";
 
 const ClientList: React.FC = () => {
@@ -49,6 +49,3 @@ const ClientList: React.FC = () => {
 };
 
 export default ClientList;
-function clientSelected() {
-  throw new Error("Function not implemented.");
-}

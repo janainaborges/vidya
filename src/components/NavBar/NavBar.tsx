@@ -26,10 +26,22 @@ const NavBar = () => {
             color={pathname === "/client" ? `${colors.primary}` : "none"}
             onClick={() => router.push("/client")}
             border="12px"
-
           />
         </div>
-        <div>oie</div>
+        <div>
+          {" "}
+          <ButtonCart
+            text={"Pedidos"}
+            icon={MdOutlinePeopleAlt}
+            size={"28px"}
+            filter={false}
+            backgroundColor={
+              pathname === "/order" ? `${colors.blueLight}` : "none"
+            }
+            color={pathname === "/order" ? `${colors.primary}` : "none"}
+            onClick={() => router.push("/order")}
+          />
+        </div>
         <div>
           <ButtonCart
             text={"Produto"}
@@ -40,7 +52,7 @@ const NavBar = () => {
               pathname === "/product" ? `${colors.blueLight}` : "none"
             }
             color={pathname === "/product" ? `${colors.primary}` : "none"}
-            onClick={() => router.push("/client")}
+            onClick={() => router.push("/product")}
           />
         </div>
       </Center>

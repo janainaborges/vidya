@@ -51,7 +51,13 @@ export const Title = styled.h1`
   color: ${colors.dark};
 `;
 
-const ModalInfo = ({ isOpen, onClick, children }: any) => {
+interface IModalInfo {
+  isOpen: any
+  onClick: () => void;
+  children: any
+  title?: string;
+}
+const ModalInfo = ({ isOpen, onClick, children, title }: IModalInfo) => {
   const client = useClientSelect();
 
   if (!isOpen) return null;
@@ -61,7 +67,7 @@ const ModalInfo = ({ isOpen, onClick, children }: any) => {
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         <Modal>
           <Header>
-            <Title>{!client ? "Cadastrar Cliente" : client.user}</Title>
+            <Title>{!client ? title : client.user}</Title>
 
             <CloseButton onClick={onClick}>
               <IoMdClose fontSize={"24px"} />

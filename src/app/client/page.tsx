@@ -1,38 +1,25 @@
 "use client";
 import ButtonCart from "@/components/Buttons/ButtonCart";
-import CardBody from "@/components/Cards/CardBody";
 import InputSearch from "@/components/Inputs/InputSearch";
 import ModalInfo from "@/components/Modal/ModalInfo";
-import ClienteForm from "@/features/clientes/clienteForm";
-import ClientList from "@/features/clientes/clienteList";
+import ClienteForm from "@/components/features/client/clientForm";
+import ClientList from "@/components/features/client/clientList";
 
 import { useAppSelector } from "@/hooks/useStore";
 import { RootState } from "@/redux/store";
 import { ChangeEvent, Fragment, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import { SlLocationPin } from "react-icons/sl";
-import { Container, Header } from "./styles";
+import { Container, Header } from "../styles";
 import { GoPlus } from "react-icons/go";
+import CardListClient from "@/components/Cards/CardListClient";
 
-const data = [
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-  { string: "JS", name: "vydia", cnpj: "0000.0.00" },
-];
 export default function Client() {
   const client = useAppSelector((state: RootState) => state.client.clients);
 
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [isOpenList, setIsOpenList] = useState(false);
 
-  console.log(isOpenForm)
+  console.log(isOpenForm);
 
   const [search, setSearch] = useState("");
 
@@ -44,6 +31,11 @@ export default function Client() {
     client.user.toLowerCase().includes(search.toLowerCase())
   );
 
+  const children = {
+    form: <ClienteForm />,
+    list: <ClientList />,
+  };
+
   return (
     <Fragment>
       <Container>
@@ -51,7 +43,9 @@ export default function Client() {
           <InputSearch
             endIcon={<CiSearch />}
             inputValue={search}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleSearchChange(e)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handleSearchChange(e)
+            }
             placeholder="Pesquisar"
             size={"large"}
           />
@@ -59,30 +53,24 @@ export default function Client() {
             onClick={() => setIsOpenForm(!isOpenForm)}
             icon={GoPlus}
             type="button"
-            text={"Novo Pedido"}
+            text={"Novo Cliente"}
             filter={false}
             size={"large"}
           />
         </Header>
-        <CardBody
+        <CardListClient
           data={filteredClients}
           onCardClick={() => setIsOpenList(!isOpenList)}
         />
       </Container>
 
       <div>
-        <ModalInfo
-          isOpen={isOpenForm}
-          onClick={() => setIsOpenForm(false)}
-          // eslint-disable-next-line react/no-children-prop
-          children={<ClienteForm />}
-        />
-        <ModalInfo
-          isOpen={isOpenList}
-          onClick={() => setIsOpenList(false)}
-          // eslint-disable-next-line react/no-children-prop
-          children={<ClientList />}
-        />
+        <ModalInfo isOpen={isOpenForm} onClick={() => setIsOpenForm(false)} title="Cadastrar Cliente">
+          {children.form}
+        </ModalInfo>
+        <ModalInfo isOpen={isOpenList} onClick={() => setIsOpenList(false)}>
+          {children.list}
+        </ModalInfo>
       </div>
     </Fragment>
   );

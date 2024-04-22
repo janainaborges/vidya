@@ -8,17 +8,17 @@ import {
   CardText,
   Box,
   Main,
-} from "./CardBody.styles";
+} from "./CardList.styles";
 import { IClient } from "@/types/client.types";
 import { useDispatch } from "react-redux";
-import { setSelectedClientId } from "@/redux/reducers/selectedClientIdSlice";
+import { setSelectedClientId } from "@/redux/reducers/selectors/selectedClientSlice";
 
 interface CardData {
   data: IClient[];
   onCardClick: () => void;
 }
 
-const CardBody = ({ data, onCardClick }: CardData) => {
+const CardListClient = ({ data, onCardClick }: CardData) => {
   const dispatch = useDispatch();
 
   const handleCardClick = (clientId: string) => {
@@ -33,7 +33,7 @@ const CardBody = ({ data, onCardClick }: CardData) => {
           <Container key={client.id} onClick={() => handleCardClick(client.id)}>
             <CardText>VY</CardText>
             <BoxCenter>
-              <Title>{client.account}</Title>
+              <Title>{client.user}</Title>
               <Subtitle>{client.cnpj}</Subtitle>
             </BoxCenter>
           </Container>
@@ -43,4 +43,4 @@ const CardBody = ({ data, onCardClick }: CardData) => {
   );
 };
 
-export default CardBody;
+export default CardListClient;

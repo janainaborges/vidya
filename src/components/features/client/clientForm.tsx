@@ -5,16 +5,16 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-import { setClient } from "@/redux/reducers/clientSlice";
+import { setClient } from "@/redux/reducers/slice/clientSlice";
 import useZipCode from "@/hooks/useZipCode";
 import { useAppDispatch } from "@/hooks/useStore";
 import { formatCnpjMask, formatZipCode } from "@/utils/masks";
-import InputFieldComponent from "@/components/Inputs/inputField";
-import { Column, Footer, Form, Label, Row } from "./client.styles";
+import { Column, Footer, Form, Label, Row } from "../styles";
 import ButtonCart from "@/components/Buttons/ButtonCart";
+import InputFieldComponent from "@/components/Inputs/InputFieldComponent";
 
 const schema = Yup.object().shape({
-  nome: Yup.string().required("Nome é obrigatório"),
+  user: Yup.string().required("Nome é obrigatório"),
   cnpj: Yup.string().required("CNPJ é obrigatório"),
   telefone: Yup.string().required("Telefone é obrigatório"),
   cep: Yup.string().required("CEP é obrigatório"),
@@ -68,7 +68,7 @@ const ClienteForm: React.FC = () => {
         <Column>
           <Label>Nome</Label>
           <Controller
-            name="nome"
+            name="user"
             control={control}
             defaultValue=""
             render={({ field }) => <InputFieldComponent {...field} />}

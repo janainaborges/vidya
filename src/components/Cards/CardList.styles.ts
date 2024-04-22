@@ -4,6 +4,8 @@ import styled from "styled-components";
 export const Main = styled.div`
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  overflow: hidden;
 `;
 export const Box = styled.div`
   margin-top: 10px;
@@ -39,6 +41,28 @@ export const CardText = styled.div`
   font-weight: 700;
   font-size: 20px;
 `;
+interface imagesI {
+  bg: any;
+}
+
+export const BoxImage = styled.div<imagesI>`
+  background-image: url(${(props: imagesI) => props.bg});
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 100%;
+  width: 300px;
+  height: 200px;
+`;
+
+export const BoxImages = styled.div<imagesI>`
+  background-image: url(${(props: imagesI) => props.bg});
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 100%;
+  width: 150px;
+  height: 100px;
+  background-color: blue;
+`;
 
 export const Subtitle = styled.h2`
   display: flex;
@@ -60,4 +84,22 @@ export const Title = styled.h1`
   font-size: 18px;
   font-weight: 500;
   color: ${colors.dark};
+`;
+
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background-color: pink;
+`;
+
+export const Row = styled.div`
+  background-color: white;
+  padding: 8px;
+  flex-direction: column;
+  display: flex;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 `;

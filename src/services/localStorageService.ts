@@ -1,9 +1,9 @@
-import { getClient } from "@/redux/reducers/clientSlice";
+import { getClient } from "@/redux/reducers/slice/clientSlice";
 import { AppThunk } from "@/redux/store";
 
-const localStorageKey = "vidya";
+// const localStorageKey = "vidya";
 
-export const getState = () => {
+export const getState = (localStorageKey: string) => {
   try {
     const serializedState = localStorage.getItem(localStorageKey);
     if (serializedState === null) {
@@ -15,7 +15,7 @@ export const getState = () => {
   }
 };
 
-export const saveState = (state: any) => {
+export const saveState = (state: any, localStorageKey: string) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem(localStorageKey, serializedState);
@@ -24,8 +24,8 @@ export const saveState = (state: any) => {
   }
 };
 
-export const fetchClientState = (): AppThunk => async (dispatch: (arg0: any) => void) => {
-  const storedState = getState();
+export const fetchClientState = (localStorageKey: string): AppThunk => async (dispatch: (arg0: any) => void) => {
+  const storedState = getState(localStorageKey);
   if (storedState) {
     dispatch(getClient(storedState));
   }

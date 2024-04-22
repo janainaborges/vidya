@@ -8,7 +8,8 @@ const InputSearch = ({
   inputValue,
   onChange,
   placeholder,
-  size
+  size,
+  ...props
 }: IInputSearch) => {
   return (
     <SearchContainer size={size}>
@@ -23,6 +24,7 @@ const InputSearch = ({
         onChange={onChange}
         placeholder={placeholder}
         aria-label={placeholder}
+        {...props}
       />
       {endIcon && (
         <IconEnd>

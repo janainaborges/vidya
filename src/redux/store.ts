@@ -1,6 +1,6 @@
 "use client"
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./reducers";
+import rootReducer from "./reducers/rootReducer";
 
 export const makeStore = () => {
   return configureStore({
