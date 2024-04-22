@@ -16,18 +16,12 @@ return value
     .replace(/(-\d{3})\d+?$/, "$1");
 }
 
-export function phone_mask(v: any) {
-v = v.replace(/\D/g, "");
-if (v.length <= 11) {
+export function formatPhone(v: any) {
     v = v.replace(/\D/g, "");
-    v = v.replace(/(\d{2})(\d{1})/, "($1) $2.");
-    v = v.replace(/(\d{4})/, "$1-");
-    v = v.replace(/(\d{4})/, "$1");
-} else {
-    v = v.replace(/\D/g, "");
-    v = v.replace(/(\d{2})(\d{1})/, "($1) $2.");
-    v = v.replace(/(\d{4})/, "$1-");
-    v = v.replace(/(\d{4})/, "$1");
-}
-return v;
+    if (v.length <= 10) {
+        v = v.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+    } else {
+        v = v.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    }
+    return v;
 }

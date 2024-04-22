@@ -8,15 +8,19 @@ import * as Yup from "yup";
 import { setClient } from "@/redux/reducers/slice/clientSlice";
 import useZipCode from "@/hooks/useZipCode";
 import { useAppDispatch } from "@/hooks/useStore";
-import { formatCnpjMask, formatZipCode } from "@/utils/masks";
+import { formatCnpjMask, formatPhone, formatZipCode } from "@/utils/masks";
 import { Column, Footer, Form, Label, Row } from "../styles";
 import ButtonCart from "@/components/Buttons/ButtonCart";
 import InputFieldComponent from "@/components/Inputs/InputFieldComponent";
 
 const schema = Yup.object().shape({
   user: Yup.string().required("Nome é obrigatório"),
-  cnpj: Yup.string().required("CNPJ é obrigatório"),
-  telefone: Yup.string().required("Telefone é obrigatório"),
+  cnpj: Yup.string()
+    .required("CNPJ é obrigatório")
+    .matches(/^\d{14}$/, "CNPJ deve ter 14 dígitos"),
+  telefone: Yup.string()
+    .required("Telefone é obrigatório")
+    .matches(/^\d{10,11}$/, "Telefone deve ter entre 10 e 11 dígitos"),
   cep: Yup.string().required("CEP é obrigatório"),
   estado: Yup.string().required("Estado é obrigatório"),
   cidade: Yup.string().required("Cidade é obrigatória"),
@@ -24,6 +28,7 @@ const schema = Yup.object().shape({
   endereco: Yup.string().required("Endereço é obrigatório"),
   numero: Yup.string().required("Número é obrigatório"),
 });
+
 
 const ClienteForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,8 +50,11 @@ const ClienteForm: React.FC = () => {
 
   const handleCpfMask = (event: React.ChangeEvent<HTMLInputElement>) => {
     const mask = formatCnpjMask(event.target.value);
-    console.log("cnpj", mask);
     setValue("cnpj", mask);
+  };
+  const handlePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const mask = formatPhone(event.target.value);
+    setValue("telefone", mask);
   };
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatZipCode(event.target.value);
@@ -54,12 +62,10 @@ const ClienteForm: React.FC = () => {
   };
 
   if (results) {
-    results.map((e: any) => {
-      setValue("estado", e.uf);
-      setValue("cidade", e.localidade);
-      setValue("bairro", e.bairro);
-      setValue("endereco", e.logradouro);
-    });
+      setValue("estado", results.uf);
+      setValue("cidade", results.localidade);
+      setValue("bairro", results.bairro);
+      setValue("endereco", results.logradouro);
   }
 
   return (
@@ -96,7 +102,11 @@ const ClienteForm: React.FC = () => {
             name="telefone"
             control={control}
             defaultValue=""
-            render={({ field }) => <InputFieldComponent {...field} />}
+            render={({ field }) => <InputFieldComponent {...field}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handlePhone(e)
+            }
+            />}
           />
         </Column>
       </Row>
